@@ -493,7 +493,7 @@ void ImXpad::always_executed_hook()
 {
     try
     {
-        yat::AutoMutex<> _lock(ControlFactory::instance().get_global_mutex());
+        //yat::AutoMutex<> _lock(ControlFactory::instance().get_global_mutex());
         m_status_message.str("");
         //- get the singleton control objet used to pilot the lima framework
         m_ct = ControlFactory::instance().get_control("ImXpad");
