@@ -389,20 +389,21 @@ CtControl* ControlFactory::create_control(const std::string& detector_type)
         }
 #endif
 
-/* #ifdef SPECTRUMONE_ENABLED
+#ifdef SPECTRUMONE_ENABLED
         if (detector_type == "SpectrumOneCCD")
         {
 
             if (!ControlFactory::m_is_created)
             {
                 Tango::DbData db_data;
-                db_data.push_back(Tango::DbDatum("GpibControllerHost"));
-                db_data.push_back(Tango::DbDatum("GpibControllerPort"));
+                db_data.push_back(Tango::DbDatum("GpibBoardIndex"));
                 db_data.push_back(Tango::DbDatum("CameraGpibAddress"));
                 db_data.push_back(Tango::DbDatum("TablesPath"));
                 db_data.push_back(Tango::DbDatum("TablesMode"));
                 db_data.push_back(Tango::DbDatum("ExpertConfig"));
                 db_data.push_back(Tango::DbDatum("InvertX"));
+                db_data.push_back(Tango::DbDatum("SimpleCommandTimeout"));
+                db_data.push_back(Tango::DbDatum("DataAcquisitionTimeout"));
                 (Tango::Util::instance()->get_database())->get_device_property(m_device_name_specific, db_data);
 
                 SpectrumOne::GpibConfig gpib_config;
@@ -412,23 +413,25 @@ CtControl* ControlFactory::create_control(const std::string& detector_type)
 
                 unsigned long temp;
 
-                // Host
-                db_data[0] >> gpib_config.host;
-                // Port
-                db_data[1] >> temp;
-                gpib_config.port = static_cast<size_t>(temp);
+                // Board index
+                db_data[0] >> temp;
+                gpib_config.board_index = static_cast<size_t>(temp);
                 // GpibAddress
-                db_data[2] >> temp;
+                db_data[1] >> temp;
                 gpib_config.gpib_address = static_cast<size_t>(temp);
                 // TablesPath
-                db_data[3] >> command_config.tables_path;
+                db_data[2] >> command_config.tables_path;
                 // TablesMode
-                db_data[4] >> command_config.tables_mode;
+                db_data[3] >> command_config.tables_mode;
                 // ExpertConfig
-                db_data[5] >> expert_config_vect;
+                db_data[4] >> expert_config_vect;
                 command_config.expert_config = yat::StringUtil::join(expert_config_vect, '\n');
                 // InvertX
-                db_data[6] >> command_config.invert_x;
+                db_data[5] >> command_config.invert_x;
+                // SimpleCommandTimeout
+                db_data[6] >> gpib_config.default_timeout_str;
+                // DataAcquisitionTimeout
+                db_data[7] >> gpib_config.long_timeout_str;
 
 
                 m_camera = static_cast<void*> (new SpectrumOne::Camera(gpib_config, command_config));
@@ -439,7 +442,7 @@ CtControl* ControlFactory::create_control(const std::string& detector_type)
                 return m_control;
             }
         }
-#endif */
+#endif
 
 #ifdef ANDOR_ENABLED
         if (detector_type == "AndorCCD")
@@ -1050,8 +1053,8 @@ CtControl* ControlFactory::create_control(const std::string& detector_type)
         }
 #endif
 		
-#ifdef SPECTRAL_ENABLED
-        if (detector_type == "Spectral")
+#ifdef SPECTRALINSTRUMENT_ENABLED
+        if (detector_type == "SpectralInstrument")
         {
             if (!ControlFactory::m_is_created)
             {
@@ -1073,13 +1076,13 @@ CtControl* ControlFactory::create_control(const std::string& detector_type)
                 db_data[prop_index++] >> image_packet_pixels_nb;
                 db_data[prop_index++] >> image_packet_delay_micro_sec;
                 
-                m_camera = static_cast<void*> (new Spectral::Camera(connection_address          ,   // server name or IP address of the SI Image SGL II software
+                m_camera = static_cast<void*> (new SpectralInstrument::Camera(connection_address          ,   // server name or IP address of the SI Image SGL II software
                                                                     connection_port             ,   // TCP/IP port of the SI Image SGL II software
                                                                     image_packet_pixels_nb      ,   // number of pixels sent into a image part TCP/IP packet
                                                                     image_packet_delay_micro_sec)); // delay between the sending of two image part TCP/IP packets (in micro-seconds)
                                                                 
-                m_interface = static_cast<void*> (new Spectral::Interface(*(static_cast<Spectral::Camera*> (m_camera))));
-                m_control = new CtControl(static_cast<Spectral::Interface*> (m_interface));
+                m_interface = static_cast<void*> (new SpectralInstrument::Interface(*(static_cast<SpectralInstrument::Camera*> (m_camera))));
+                m_control = new CtControl(static_cast<SpectralInstrument::Interface*> (m_interface));
 
                 ControlFactory::m_is_created = true;
                 return m_control;
@@ -1297,12 +1300,12 @@ void ControlFactory::reset(const std::string& detector_type)
                 }
 #endif
 
-/* #ifdef SPECTRUMONE_ENABLED        
+#ifdef SPECTRUMONE_ENABLED        
                 if (detector_type == "SpectrumOneCCD")
                 {
 					delete (static_cast<SpectrumOne::Camera*> (m_camera));				
                 }
-#endif */
+#endif
 
 #ifdef UFXC_ENABLED        
                 if (detector_type == "Ufxc")
@@ -1318,10 +1321,10 @@ void ControlFactory::reset(const std::string& detector_type)
                 }
 #endif  
 
-#ifdef SPECTRAL_ENABLED        
-                if (detector_type == "Spectral")
+#ifdef SPECTRALINSTRUMENT_ENABLED        
+                if (detector_type == "SpectralInstrument")
                 {
-                    delete (static_cast<Spectral::Camera*> (m_camera));
+                    delete (static_cast<SpectralInstrument::Camera*> (m_camera));
                 }
 #endif
 

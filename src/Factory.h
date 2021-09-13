@@ -68,10 +68,15 @@
 #include <MerlinInterface.h>
 #endif
 
-/* #ifdef SPECTRUMONE_ENABLED
+#ifdef SPECTRUMONE_ENABLED
 #include <SpectrumOneInterface.h>
 #include <SpectrumOneCamera.h>
-#endif */
+#include <SpectrumOneRoiCtrlObj.h>
+#include <SpectrumOneDetInfoCtrlObj.h>
+#include <SpectrumOneSyncCtrlObj.h>
+#include <SpectrumOneEventCtrlObj.h>
+#include <SpectrumOneBinCtrlObj.h>
+#endif
 
 #ifdef ANDOR_ENABLED
 #include <AndorInterface.h>
@@ -158,9 +163,9 @@
 #include <SlsEigerInterface.h>
 #endif
 
-#ifdef SPECTRAL_ENABLED  
-#include <SpectralCamera.h>
-#include <SpectralInterface.h>
+#ifdef SPECTRALINSTRUMENT_ENABLED  
+#include <SpectralInstrumentCamera.h>
+#include <SpectralInstrumentInterface.h>
 #endif
 
 #ifdef LAMBDA_ENABLED

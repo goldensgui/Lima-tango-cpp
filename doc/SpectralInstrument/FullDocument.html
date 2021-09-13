@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <html>
 <head>
-<title> SpectrumOneCCD Tango Class User&lsquo;s Guide </title>
+<title> SpectralInstrument Tango Class User&lsquo;s Guide </title>
 </head>
 <body text="Black" bgcolor="White" link="Blue" vlink="Purple" alink="Red">
 <hr>
 <br>
-<center><h2><u><b> SpectrumOneCCD Tango Cpp Class </b></u></h2></center>	<br><br>
+<center><h2><u><b> SpectralInstrument Tango Cpp Class </b></u></h2></center>	<br><br>
 	<ul>
 		<font size="+1"><u><b> Contents : </b></u></font>
 		<ul>
@@ -16,16 +16,12 @@
 			<ul>
 				<li> <a href="FullDocument.html#cmdState"> State </a>
 				<li> <a href="FullDocument.html#cmdStatus"> Status </a>
-				<li> <a href="FullDocument.html#cmdGetTemperature"> GetTemperature </a>
-				<li> <a href="FullDocument.html#cmdForceConfig"> ForceConfig </a>
-				<li> <a href="FullDocument.html#cmdGetGain"> GetGain </a>
 			</ul>
 			<li> <a href="FullDocument.html#attributes">   Attributes   </a>
 			<ul>
-				<li> <a href="FullDocument.html#attrlastTemperature"> lastTemperature </a>
-				<li> <a href="FullDocument.html#attrgain"> gain </a>
-				<li> <a href="FullDocument.html#attrnumFlushes"> numFlushes </a>
-				<li> <a href="FullDocument.html#attropenShutter"> openShutter </a>
+				<li> <a href="FullDocument.html#attrcooling"> cooling </a>
+				<li> <a href="FullDocument.html#attrccdTemperature"> ccdTemperature </a>
+				<li> <a href="FullDocument.html#attrreadoutSpeed"> readoutSpeed </a>
 			</ul>
 			<li> <a href="FullDocument.html#states">       States       </a>
 		</ul>
@@ -37,25 +33,25 @@
 	<br><br><br>
 	<table border="0" width="100%">
 		<Tr>
-			<td> <font size="+1"><u><b> SpectrumOneCCD Class Identification : </b></u></font> </td>
-			<td> <font size="+1"><u><b> SpectrumOneCCD Class Inheritance : </b></u></font> </td>
+			<td> <font size="+1"><u><b> SpectralInstrument Class Identification : </b></u></font> </td>
+			<td> <font size="+1"><u><b> SpectralInstrument Class Inheritance : </b></u></font> </td>
 		</tr>
 		<td><ul>
 			<table border="0">
 				<Tr>
-					<td> Contact </td><td> : at synchrotron-soleil.fr - hottois</td>
+					<td> Contact </td><td> : at synchrotron-soleil.fr - cedric.castel</td>
 				</tr>
 				<tr>
 					<td> Class Family </td><td> : Acquisition
 				</tr>
 				<tr>
-					<td> Platform </td><td> : All Platforms </td>
+					<td> Platform </td><td> : Unix Like </td>
 				</tr>
 				<tr>
-					<td> Bus </td><td> : Not Applicable </td>
+					<td> Bus </td><td> : Ethernet </td>
 				</tr>
 				<tr>
-					<td> Manufacturer </td><td> : none </td>
+					<td> Manufacturer </td><td> : PSI </td>
 				</tr>
 				<tr>
 					<td> Manufacturer ref.</td><td> :  </td>
@@ -64,7 +60,7 @@
 		</ul></td>
 		<td>
 			<ul><li> <a href="http://www.esrf.eu/computing/cs/tango/tango_doc/kernel_doc/cpp_doc/" target="new"> Tango::DeviceImpl</a></li>
-			<ul> <li> SpectrumOneCCD</li>
+			<ul> <li> SpectralInstrument</li>
 			<br>
 			<br>
 			<br>
@@ -73,10 +69,10 @@
 		</td>
 	</Table>
 	<br><br><br>
-	<font size="+1"><u><b> SpectrumOneCCD Class Description : </b></u></font>
+	<font size="+1"><u><b> SpectralInstrument Class Description : </b></u></font>
 	<br><br>
 	<ul>
-		Specific TANGO device for the LIMA plugin SpectrumOne.
+		Device for detectors from Spectral Instruments. 
 		
 		<!---  /*PROTECTED REGION ID(FullDocument.html) ENABLED START*/  --->
 			<!--- Add your own documentation, pictures, links,.... --->
@@ -89,7 +85,7 @@
 <hr>
 <a name="properties"> </a>
 <br><br><br>
-<font size="+1"><u><b> SpectrumOneCCD  Properties : </b></u></font>
+<font size="+1"><u><b> SpectralInstrument  Properties : </b></u></font>
 <br><br><br>
 <font size="+1"><u><b> There is no class properties </b></u></font>
 <br><br><br>
@@ -103,90 +99,32 @@
 		<td> <center><b> Default Value </b></center> </td>
 	</tr>
 	<tr>
-		<td> CameraGpibAddress </td>
-		<td> Address of the camera on the GPIB bus (from 0 to 30) </td>
+		<td> ConnectionAddress </td>
+		<td> Only an expert User could change this property.<br><Br>
+			Server name or IP address of the SI Image SGL II software.<BR> </td>
+		<td> String </td>
+		<td> 127.0.0.1 <br> </td>
+	</tr>
+	<tr>
+		<td> ConnectionPort </td>
+		<td> Only an expert User could change this property.<br><Br>
+			TCP/IP port of the SI Image SGL II software.<BR> </td>
 		<td> int </td>
 		<td> 0 <br> </td>
 	</tr>
 	<tr>
-		<td> GpibBoardIndex </td>
-		<td> Index of the NI GPIB board </td>
+		<td> ImagePacketPixelsNb </td>
+		<td> Only an expert User could change this property.<br><Br>
+			Number of pixels sent into a image part TCP/IP packet.<BR> </td>
 		<td> int </td>
-		<td> 0 <br> </td>
+		<td> 512 <br> </td>
 	</tr>
 	<tr>
-		<td> TablesPath </td>
-		<td> Path of the tables to be loaded in the camera for its initialization </td>
-		<td> String </td>
-		<td> /usr/Local/configFiles/SpectrumOne <br> </td>
-	</tr>
-	<tr>
-		<td> ExpertConfig </td>
-		<td> Advanced config for the camera </td>
-		<td> String[] </td>
-		<td> [CCD_config], port=, total_active_x_pixels=, total_active_y_pixels=, num_serial_pixels_before_active=, num_serial_pixels_after_active=, num_parallel_rows_before_active=, num_parallel_rows_after_active=, register_loc_and_direction=, min_temperature=, max_temperature=, min_shutter_time=, max_shutter_time=, min_gain=, max_gain=, h_pixel_spacing=, v_pixel_spacing=, total_parallel_pixels=, total_serial_pixels= </td>
-	</tr>
-	<tr>
-		<td> InvertX </td>
-		<td> Used to invert the X axis of the images </td>
-		<td> boolean </td>
-		<td> true <br> </td>
-	</tr>
-	<tr>
-		<td> TablesMode </td>
-		<td> Mode of the tables to send to the camera for its initialization.<Br>
-			Is contained in the file names of the tables.<Br>
-			For example the mode of XXXX1401.TAB is 1401. </td>
-		<td> String </td>
-		<td> 1401 <br> </td>
-	</tr>
-	<tr>
-		<td> SimpleCommandTimeout </td>
-		<td> Default timeout for commands:<Br>
-			TNONE   Infinite timeout<Br>
-			T10us   Timeout of 10 us<Br>
-			T30us   Timeout of 30 us<Br>
-			T100us  Timeout of 100 us<Br>
-			T300us  Timeout of 300 us<Br>
-			T1ms    Timeout of 1 ms<Br>
-			T3ms    Timeout of 3 ms<Br>
-			T10ms   Timeout of 10 ms<Br>
-			T30ms   Timeout of 30 ms<Br>
-			T100ms  Timeout of 100 ms<Br>
-			T300ms  Timeout of 300 ms<Br>
-			T1s     Timeout of 1 s<Br>
-			T3s     Timeout of 3 s<Br>
-			T10s    Timeout of 10 s<Br>
-			T30s    Timeout of 30 s<Br>
-			T100s   Timeout of 100 s<Br>
-			T300s   Timeout of 300 s<Br>
-			T1000s  Timeout of 1000 s </td>
-		<td> String </td>
-		<td> T3s <br> </td>
-	</tr>
-	<tr>
-		<td> DataAcquisitionTimeout </td>
-		<td> Timeout for data reception:<Br>
-			TNONE   Infinite timeout<Br>
-			T10us   Timeout of 10 us<Br>
-			T30us   Timeout of 30 us<Br>
-			T100us  Timeout of 100 us<Br>
-			T300us  Timeout of 300 us<Br>
-			T1ms    Timeout of 1 ms<Br>
-			T3ms    Timeout of 3 ms<Br>
-			T10ms   Timeout of 10 ms<Br>
-			T30ms   Timeout of 30 ms<Br>
-			T100ms  Timeout of 100 ms<Br>
-			T300ms  Timeout of 300 ms<Br>
-			T1s     Timeout of 1 s<Br>
-			T3s     Timeout of 3 s<Br>
-			T10s    Timeout of 10 s<Br>
-			T30s    Timeout of 30 s<Br>
-			T100s   Timeout of 100 s<Br>
-			T300s   Timeout of 300 s<Br>
-			T1000s  Timeout of 1000 s </td>
-		<td> String </td>
-		<td> T100s <br> </td>
+		<td> ImagePacketDelayMicroSec </td>
+		<td> Only an expert User could change this property.<br><Br>
+			Delay between the sending of two image part TCP/IP packets (in micro-seconds).<BR> </td>
+		<td> int </td>
+		<td> 300 <br> </td>
 	</tr>
 </table>
 <br><br>
@@ -195,7 +133,7 @@
 <br><br><br><br>
 <Table Border=2 Cellpadding=3 CELLSPACING=0>
 	<tr bgcolor="#CCCCFF" class="TableHeadingColor">
-	<td colspan=5> <font size=+1> <center><b> SpectrumOneCCD Class Commands </b></font></center></td>
+	<td colspan=5> <font size=+1> <center><b> SpectralInstrument Class Commands </b></font></center></td>
 	<tr bgcolor="#CCCCFF" class="TableHeadingColor">
 		<td> <center><b> Name </b></center> </td>
 		<td> <center><b> Input type </b></center> </td>
@@ -216,29 +154,6 @@
 		<td> CONST_DEV_STRING </td>
 		<td> OPERATOR </td>
 		<td> This command gets the device status (stored in its device_status data member) and returns it to the caller. </td>
-	</tr>
-	<tr>
-		<td> <a href="CmdGetTemperature.html"> GetTemperature </a> </td>
-		<td> DEV_VOID </td>
-		<td> DEV_VOID </td>
-		<td> OPERATOR </td>
-		<td> Get the temperature of the CCD sensor.<Br>
-			The temperature will be updated in the lastTemperature attribute. </td>
-	</tr>
-	<tr>
-		<td> <a href="CmdForceConfig.html"> ForceConfig </a> </td>
-		<td> DEV_VOID </td>
-		<td> DEV_VOID </td>
-		<td> OPERATOR </td>
-		<td> Force the re-configuration of the camera. </td>
-	</tr>
-	<tr>
-		<td> <a href="CmdGetGain.html"> GetGain </a> </td>
-		<td> DEV_VOID </td>
-		<td> DEV_VOID </td>
-		<td> OPERATOR </td>
-		<td> Get the temperature of the camera.<Br>
-			The gain will be updated in the gain attribute. </td>
 	</tr>
 </table>
 <br><br><hr>
@@ -275,7 +190,7 @@
 	</tr>
 	<tr>
 		<td> Abstract </td>
-		<td> false </td>
+		<td> true </td>
 		<td> .. </td>
 	</tr>
 	<tr>
@@ -324,7 +239,7 @@
 	</tr>
 	<tr>
 		<td> Abstract </td>
-		<td> false </td>
+		<td> true </td>
 		<td> .. </td>
 	</tr>
 	<tr>
@@ -339,162 +254,13 @@
 		<td> .. </td>
 	</tr>
 </table>
-<br><br><hr>
-<a name="cmdGetTemperature"> </a>
-<br><br><br>
-<font size="+1"><u><b> Command GetTemperature : </b></u></font>
-<ul>
-	Get the temperature of the CCD sensor.<Br>
-	The temperature will be updated in the lastTemperature attribute.
-</ul>
-<br><br><br>
-<Table Border=2 Cellpadding=3 CELLSPACING=0>
-	<tr bgcolor="#CCCCFF" class="TableHeadingColor">
-	<td colspan=0> <font size=+1> <center><b> GetTemperature Definition </b></font></center></td>
-	</tr>
-	<tr>
-		<td> Input Argument </td>
-		<td> Tango::DEV_VOID </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td> Output Argument </td>
-		<td> Tango::DEV_VOID </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td> DisplayLevel </td>
-		<td> OPERATOR </td>
-		<td> .. </td>
-	</tr>
-	<tr>
-		<td> Inherited </td>
-		<td> false </td>
-		<td> .. </td>
-	</tr>
-	<tr>
-		<td> Abstract </td>
-		<td> false </td>
-		<td> .. </td>
-	</tr>
-	<tr>
-		<td> Polling Period </td>
-		<td> Not polled </td>
-		<td> .. </td>
-	</tr>
-<Tr BGCOLOR="#CCCCFF"><Td><Hr></Td><Td><Hr></Td><Td><Hr></Td></Tr>
-	<tr>
-		<td> Command NOT allowed for </td>
-		<td> <font size="-1">  <li> RUNNING </li>  <li> FAULT </li>  <li> ALARM </li>  <li> DISABLE </li> </font> </td>
-		<td> .. </td>
-	</tr>
-</table>
-<br><br><hr>
-<a name="cmdForceConfig"> </a>
-<br><br><br>
-<font size="+1"><u><b> Command ForceConfig : </b></u></font>
-<ul>
-	Force the re-configuration of the camera.
-</ul>
-<br><br><br>
-<Table Border=2 Cellpadding=3 CELLSPACING=0>
-	<tr bgcolor="#CCCCFF" class="TableHeadingColor">
-	<td colspan=0> <font size=+1> <center><b> ForceConfig Definition </b></font></center></td>
-	</tr>
-	<tr>
-		<td> Input Argument </td>
-		<td> Tango::DEV_VOID </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td> Output Argument </td>
-		<td> Tango::DEV_VOID </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td> DisplayLevel </td>
-		<td> OPERATOR </td>
-		<td> .. </td>
-	</tr>
-	<tr>
-		<td> Inherited </td>
-		<td> false </td>
-		<td> .. </td>
-	</tr>
-	<tr>
-		<td> Abstract </td>
-		<td> false </td>
-		<td> .. </td>
-	</tr>
-	<tr>
-		<td> Polling Period </td>
-		<td> Not polled </td>
-		<td> .. </td>
-	</tr>
-<Tr BGCOLOR="#CCCCFF"><Td><Hr></Td><Td><Hr></Td><Td><Hr></Td></Tr>
-	<tr>
-		<td> Command NOT allowed for </td>
-		<td> <font size="-1">  <li> RUNNING </li>  <li> FAULT </li>  <li> ALARM </li>  <li> DISABLE </li> </font> </td>
-		<td> .. </td>
-	</tr>
-</table>
-<br><br><hr>
-<a name="cmdGetGain"> </a>
-<br><br><br>
-<font size="+1"><u><b> Command GetGain : </b></u></font>
-<ul>
-	Get the temperature of the camera.<Br>
-	The gain will be updated in the gain attribute.
-</ul>
-<br><br><br>
-<Table Border=2 Cellpadding=3 CELLSPACING=0>
-	<tr bgcolor="#CCCCFF" class="TableHeadingColor">
-	<td colspan=0> <font size=+1> <center><b> GetGain Definition </b></font></center></td>
-	</tr>
-	<tr>
-		<td> Input Argument </td>
-		<td> Tango::DEV_VOID </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td> Output Argument </td>
-		<td> Tango::DEV_VOID </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td> DisplayLevel </td>
-		<td> OPERATOR </td>
-		<td> .. </td>
-	</tr>
-	<tr>
-		<td> Inherited </td>
-		<td> false </td>
-		<td> .. </td>
-	</tr>
-	<tr>
-		<td> Abstract </td>
-		<td> false </td>
-		<td> .. </td>
-	</tr>
-	<tr>
-		<td> Polling Period </td>
-		<td> Not polled </td>
-		<td> .. </td>
-	</tr>
-<Tr BGCOLOR="#CCCCFF"><Td><Hr></Td><Td><Hr></Td><Td><Hr></Td></Tr>
-	<tr>
-		<td> Command NOT allowed for </td>
-		<td> <font size="-1">  <li> RUNNING </li>  <li> FAULT </li>  <li> ALARM </li>  <li> DISABLE </li> </font> </td>
-		<td> .. </td>
-	</tr>
-</table>
 <br><br>
 <hr>
 <a name="attributes"> </a>
 <br><br><br><br>
 <Table Border=2 Cellpadding=3 CELLSPACING=0>
 	<tr bgcolor="#CCCCFF" class="TableHeadingColor">
-	<td colspan=8> <font size=+1> <center><b> SpectrumOneCCD Class Attributes </b></font></center></td>
+	<td colspan=8> <font size=+1> <center><b> SpectralInstrument Class Attributes </b></font></center></td>
 	<tr bgcolor="#CCCCFF" class="TableHeadingColor">
 		<td> <center><b> Name </b></center> </td>
 		<td> <center><b> Inherited </b></center> </td>
@@ -506,46 +272,34 @@
 		<td> <center><b> Description </b></center> </td>
 	</tr>
 	<tr>
-		<td> <a href="AttrlastTemperature.html"> lastTemperature </a> </td>
-		<td> false </td>
-		<td> false </td>
-		<td> Scalar </td>
-		<td> READ </td>
-		<td> Tango::DEV_DOUBLE </td>
-		<td> OPERATOR </td>
-		<td> Last temperature of the CCD </td>
-	</tr>
-	<tr>
-		<td> <a href="Attrgain.html"> gain </a> </td>
-		<td> false </td>
-		<td> false </td>
-		<td> Scalar </td>
-		<td> READ_WRITE </td>
-		<td> Tango::DEV_LONG </td>
-		<td> OPERATOR </td>
-		<td> Define CCD gain of the camera. </td>
-	</tr>
-	<tr>
-		<td> <a href="AttrnumFlushes.html"> numFlushes </a> </td>
-		<td> false </td>
-		<td> false </td>
-		<td> Scalar </td>
-		<td> READ_WRITE </td>
-		<td> Tango::DEV_LONG </td>
-		<td> OPERATOR </td>
-		<td> Set number of flushes on the camera </td>
-	</tr>
-	<tr>
-		<td> <a href="AttropenShutter.html"> openShutter </a> </td>
+		<td> <a href="Attrcooling.html"> cooling </a> </td>
 		<td> false </td>
 		<td> false </td>
 		<td> Scalar </td>
 		<td> READ_WRITE </td>
 		<td> Tango::DEV_BOOLEAN </td>
 		<td> OPERATOR </td>
-		<td> Open/close camera shutter.<Br>
-			True = Opened<Br>
-			False = Closed </td>
+		<td> Turns the CCD cooling On/Off </td>
+	</tr>
+	<tr>
+		<td> <a href="AttrccdTemperature.html"> ccdTemperature </a> </td>
+		<td> false </td>
+		<td> false </td>
+		<td> Scalar </td>
+		<td> READ </td>
+		<td> Tango::DEV_FLOAT </td>
+		<td> OPERATOR </td>
+		<td> Camera temperature status (°C) </td>
+	</tr>
+	<tr>
+		<td> <a href="AttrreadoutSpeed.html"> readoutSpeed </a> </td>
+		<td> false </td>
+		<td> false </td>
+		<td> Scalar </td>
+		<td> READ_WRITE </td>
+		<td> Tango::DEV_ENUM </td>
+		<td> OPERATOR </td>
+		<td> Readout Speed control is a convenient way to set the DSI Sample Time which is the parameter that controls the readout speed (1MHz, 690KHz) </td>
 	</tr>
 </table>
 <br><br>
@@ -554,510 +308,11 @@
 <font size="+1"><u><b> There is no dynamic attribute defined. </b></u></font>
 <br><br>
 <hr>
-<a name="attrlastTemperature"> </a>
+<a name="attrcooling"> </a>
 <br><br><br>
-<font size="+1"><u><b> Attribute lastTemperature : </b></u></font>
+<font size="+1"><u><b> Attribute cooling : </b></u></font>
 <ul>
-	Last temperature of the CCD
-</ul>
-<br><br><br>
-<Table Border=0 Cellpadding=0 CELLSPACING=20>
-	<TR>
-		<TD ALIGN="left" VALIGN=top>
-			<Table Border=2 Cellpadding=3 CELLSPACING=0>
-				<tr bgcolor="#CCCCFF" class="TableHeadingColor">
-				<td colspan=0> <font size=+1> <center><b> Attribute Definition </b></font></center></td>
-				</tr>
-				<tr>
-					<td> Attribute Type </td>
-					<td> Scalar </td>
-				</tr>
-				<tr>
-					<td> R/W Type </td>
-					<td> READ </td>
-				</tr>
-				<tr>
-					<td> Data Type </td>
-					<td> Tango::DEV_DOUBLE </td>
-				</tr>
-				<tr>
-					<td> Display Level </td>
-					<td> OPERATOR </td>
-				</tr>
-				<tr>
-					<td> Inherited </td>
-					<td> false </td>
-				</tr>
-				<tr>
-					<td> Abstract </td>
-					<td> false </td>
-				</tr>
-				<tr>
-					<td> Polling Period </td>
-					<td> Not polled </td>
-				</tr>
-				<tr>
-					<td> Memorized </td>
-					<td> Not set </td>
-				</tr>
-			<Tr BGCOLOR="#CCCCFF"><Td><Hr></Td><Td><Hr></Td></Tr>
-				<tr>
-					<td> Read allowed for </td>
-					<td> All states </td>
-				</tr>
-			</table>
-		</td>
-		<TD ALIGN="Center" VALIGN=top>
-			<Table Border=2 Cellpadding=3 CELLSPACING=0>
-				<tr bgcolor="#CCCCFF" class="TableHeadingColor">
-				<td colspan=0> <font size=+1> <center><b> Attribute Properties </b></font></center></td>
-				</tr>
-				<tr>
-					<td> label </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> unit </td>
-					<td> K </td>
-				</tr>
-				<tr>
-					<td> standard unit </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> display unit </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> format </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> max_value </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> min_value </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> max_alarm </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> min_alarm </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> max_warning </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> min_warning </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> delta_time </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> delta_val </td>
-					<td>  </td>
-				</tr>
-			</table>
-		</td>
-		<TD ALIGN="Right" VALIGN=top>
-			<Table Border=2 Cellpadding=3 CELLSPACING=0>
-				<tr bgcolor="#CCCCFF" class="TableHeadingColor">
-				<td colspan=0> <font size=+1> <center><b> Attribute Event Criteria </b></font></center></td>
-				</tr>
-				<tr>
-					<td> Periodic </td>
-					<td> Not set </td>
-				</tr>
-				<tr>
-					<td> Relative Change </td>
-					<td> Not set </td>
-				</tr>
-				<tr>
-					<td> Absolute Change </td>
-					<td> Not set </td>
-				</tr>
-			<Tr BGCOLOR="#CCCCFF"><Td><Hr></Td><Td><Hr></Td></Tr>
-				<tr>
-					<td> Archive Periodic </td>
-					<td> Not set </td>
-				</tr>
-				<tr>
-					<td> Archive Relative Change </td>
-					<td> Not set </td>
-				</tr>
-				<tr>
-					<td> Archive Absolute Change </td>
-					<td> Not set </td>
-				</tr>
-			<Tr BGCOLOR="#CCCCFF"><Td><Hr></Td><Td><Hr></Td></Tr>
-				<tr>
-					<td> Push Change event by user code </td>
-					<td> false </td>
-				</tr>
-			<Tr BGCOLOR="#CCCCFF"><Td> </Td><Td> </Td></Tr>
-				<tr>
-					<td> Push Archive event by user code </td>
-					<td> false </td>
-				</tr>
-			<Tr BGCOLOR="#CCCCFF"><Td> </Td><Td> </Td></Tr>
-				<tr>
-					<td> Push DataReady event by user code </td>
-					<td> false </td>
-				</tr>
-			</table>
-		</td>
-	</TR>
-</table>
-<br><br>
-<hr>
-<a name="attrgain"> </a>
-<br><br><br>
-<font size="+1"><u><b> Attribute gain : </b></u></font>
-<ul>
-	Define CCD gain of the camera.
-</ul>
-<br><br><br>
-<Table Border=0 Cellpadding=0 CELLSPACING=20>
-	<TR>
-		<TD ALIGN="left" VALIGN=top>
-			<Table Border=2 Cellpadding=3 CELLSPACING=0>
-				<tr bgcolor="#CCCCFF" class="TableHeadingColor">
-				<td colspan=0> <font size=+1> <center><b> Attribute Definition </b></font></center></td>
-				</tr>
-				<tr>
-					<td> Attribute Type </td>
-					<td> Scalar </td>
-				</tr>
-				<tr>
-					<td> R/W Type </td>
-					<td> READ_WRITE </td>
-				</tr>
-				<tr>
-					<td> Data Type </td>
-					<td> Tango::DEV_LONG </td>
-				</tr>
-				<tr>
-					<td> Display Level </td>
-					<td> OPERATOR </td>
-				</tr>
-				<tr>
-					<td> Inherited </td>
-					<td> false </td>
-				</tr>
-				<tr>
-					<td> Abstract </td>
-					<td> false </td>
-				</tr>
-				<tr>
-					<td> Polling Period </td>
-					<td> Not polled </td>
-				</tr>
-				<tr>
-					<td> Memorized </td>
-					<td> Not set </td>
-				</tr>
-			<Tr BGCOLOR="#CCCCFF"><Td><Hr></Td><Td><Hr></Td></Tr>
-				<tr>
-					<td> Read allowed for </td>
-					<td> All states </td>
-				</tr>
-				<tr>
-					<td> Write NOT allowed for </td>
-					<td> <font size="-1">  <li> RUNNING </li>  <li> FAULT </li>  <li> DISABLE </li> </font> </td>
-				</tr>
-			</table>
-		</td>
-		<TD ALIGN="Center" VALIGN=top>
-			<Table Border=2 Cellpadding=3 CELLSPACING=0>
-				<tr bgcolor="#CCCCFF" class="TableHeadingColor">
-				<td colspan=0> <font size=+1> <center><b> Attribute Properties </b></font></center></td>
-				</tr>
-				<tr>
-					<td> label </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> unit </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> standard unit </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> display unit </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> format </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> max_value </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> min_value </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> max_alarm </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> min_alarm </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> max_warning </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> min_warning </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> delta_time </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> delta_val </td>
-					<td>  </td>
-				</tr>
-			</table>
-		</td>
-		<TD ALIGN="Right" VALIGN=top>
-			<Table Border=2 Cellpadding=3 CELLSPACING=0>
-				<tr bgcolor="#CCCCFF" class="TableHeadingColor">
-				<td colspan=0> <font size=+1> <center><b> Attribute Event Criteria </b></font></center></td>
-				</tr>
-				<tr>
-					<td> Periodic </td>
-					<td> Not set </td>
-				</tr>
-				<tr>
-					<td> Relative Change </td>
-					<td> Not set </td>
-				</tr>
-				<tr>
-					<td> Absolute Change </td>
-					<td> Not set </td>
-				</tr>
-			<Tr BGCOLOR="#CCCCFF"><Td><Hr></Td><Td><Hr></Td></Tr>
-				<tr>
-					<td> Archive Periodic </td>
-					<td> Not set </td>
-				</tr>
-				<tr>
-					<td> Archive Relative Change </td>
-					<td> Not set </td>
-				</tr>
-				<tr>
-					<td> Archive Absolute Change </td>
-					<td> Not set </td>
-				</tr>
-			<Tr BGCOLOR="#CCCCFF"><Td><Hr></Td><Td><Hr></Td></Tr>
-				<tr>
-					<td> Push Change event by user code </td>
-					<td> false </td>
-				</tr>
-			<Tr BGCOLOR="#CCCCFF"><Td> </Td><Td> </Td></Tr>
-				<tr>
-					<td> Push Archive event by user code </td>
-					<td> false </td>
-				</tr>
-			<Tr BGCOLOR="#CCCCFF"><Td> </Td><Td> </Td></Tr>
-				<tr>
-					<td> Push DataReady event by user code </td>
-					<td> false </td>
-				</tr>
-			</table>
-		</td>
-	</TR>
-</table>
-<br><br>
-<hr>
-<a name="attrnumFlushes"> </a>
-<br><br><br>
-<font size="+1"><u><b> Attribute numFlushes : </b></u></font>
-<ul>
-	Set number of flushes on the camera
-</ul>
-<br><br><br>
-<Table Border=0 Cellpadding=0 CELLSPACING=20>
-	<TR>
-		<TD ALIGN="left" VALIGN=top>
-			<Table Border=2 Cellpadding=3 CELLSPACING=0>
-				<tr bgcolor="#CCCCFF" class="TableHeadingColor">
-				<td colspan=0> <font size=+1> <center><b> Attribute Definition </b></font></center></td>
-				</tr>
-				<tr>
-					<td> Attribute Type </td>
-					<td> Scalar </td>
-				</tr>
-				<tr>
-					<td> R/W Type </td>
-					<td> READ_WRITE </td>
-				</tr>
-				<tr>
-					<td> Data Type </td>
-					<td> Tango::DEV_LONG </td>
-				</tr>
-				<tr>
-					<td> Display Level </td>
-					<td> OPERATOR </td>
-				</tr>
-				<tr>
-					<td> Inherited </td>
-					<td> false </td>
-				</tr>
-				<tr>
-					<td> Abstract </td>
-					<td> false </td>
-				</tr>
-				<tr>
-					<td> Polling Period </td>
-					<td> Not polled </td>
-				</tr>
-				<tr>
-					<td> Memorized </td>
-					<td> Not set </td>
-				</tr>
-			<Tr BGCOLOR="#CCCCFF"><Td><Hr></Td><Td><Hr></Td></Tr>
-				<tr>
-					<td> Read allowed for </td>
-					<td> All states </td>
-				</tr>
-				<tr>
-					<td> Write NOT allowed for </td>
-					<td> <font size="-1">  <li> RUNNING </li>  <li> FAULT </li>  <li> ALARM </li>  <li> DISABLE </li> </font> </td>
-				</tr>
-			</table>
-		</td>
-		<TD ALIGN="Center" VALIGN=top>
-			<Table Border=2 Cellpadding=3 CELLSPACING=0>
-				<tr bgcolor="#CCCCFF" class="TableHeadingColor">
-				<td colspan=0> <font size=+1> <center><b> Attribute Properties </b></font></center></td>
-				</tr>
-				<tr>
-					<td> label </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> unit </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> standard unit </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> display unit </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> format </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> max_value </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> min_value </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> max_alarm </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> min_alarm </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> max_warning </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> min_warning </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> delta_time </td>
-					<td>  </td>
-				</tr>
-				<tr>
-					<td> delta_val </td>
-					<td>  </td>
-				</tr>
-			</table>
-		</td>
-		<TD ALIGN="Right" VALIGN=top>
-			<Table Border=2 Cellpadding=3 CELLSPACING=0>
-				<tr bgcolor="#CCCCFF" class="TableHeadingColor">
-				<td colspan=0> <font size=+1> <center><b> Attribute Event Criteria </b></font></center></td>
-				</tr>
-				<tr>
-					<td> Periodic </td>
-					<td> Not set </td>
-				</tr>
-				<tr>
-					<td> Relative Change </td>
-					<td> Not set </td>
-				</tr>
-				<tr>
-					<td> Absolute Change </td>
-					<td> Not set </td>
-				</tr>
-			<Tr BGCOLOR="#CCCCFF"><Td><Hr></Td><Td><Hr></Td></Tr>
-				<tr>
-					<td> Archive Periodic </td>
-					<td> Not set </td>
-				</tr>
-				<tr>
-					<td> Archive Relative Change </td>
-					<td> Not set </td>
-				</tr>
-				<tr>
-					<td> Archive Absolute Change </td>
-					<td> Not set </td>
-				</tr>
-			<Tr BGCOLOR="#CCCCFF"><Td><Hr></Td><Td><Hr></Td></Tr>
-				<tr>
-					<td> Push Change event by user code </td>
-					<td> false </td>
-				</tr>
-			<Tr BGCOLOR="#CCCCFF"><Td> </Td><Td> </Td></Tr>
-				<tr>
-					<td> Push Archive event by user code </td>
-					<td> false </td>
-				</tr>
-			<Tr BGCOLOR="#CCCCFF"><Td> </Td><Td> </Td></Tr>
-				<tr>
-					<td> Push DataReady event by user code </td>
-					<td> false </td>
-				</tr>
-			</table>
-		</td>
-	</TR>
-</table>
-<br><br>
-<hr>
-<a name="attropenShutter"> </a>
-<br><br><br>
-<font size="+1"><u><b> Attribute openShutter : </b></u></font>
-<ul>
-	Open/close camera shutter.<Br>
-	True = Opened<Br>
-	False = Closed
+	Turns the CCD cooling On/Off
 </ul>
 <br><br><br>
 <Table Border=0 Cellpadding=0 CELLSPACING=20>
@@ -1105,8 +360,338 @@
 					<td> All states </td>
 				</tr>
 				<tr>
-					<td> Write NOT allowed for </td>
-					<td> <font size="-1">  <li> RUNNING </li>  <li> FAULT </li>  <li> ALARM </li>  <li> DISABLE </li> </font> </td>
+					<td> Write allowed for </td>
+					<td> All states </td>
+				</tr>
+			</table>
+		</td>
+		<TD ALIGN="Center" VALIGN=top>
+			<Table Border=2 Cellpadding=3 CELLSPACING=0>
+				<tr bgcolor="#CCCCFF" class="TableHeadingColor">
+				<td colspan=0> <font size=+1> <center><b> Attribute Properties </b></font></center></td>
+				</tr>
+				<tr>
+					<td> label </td>
+					<td>  </td>
+				</tr>
+				<tr>
+					<td> unit </td>
+					<td>  </td>
+				</tr>
+				<tr>
+					<td> standard unit </td>
+					<td>  </td>
+				</tr>
+				<tr>
+					<td> display unit </td>
+					<td>  </td>
+				</tr>
+				<tr>
+					<td> format </td>
+					<td>  </td>
+				</tr>
+				<tr>
+					<td> max_value </td>
+					<td>  </td>
+				</tr>
+				<tr>
+					<td> min_value </td>
+					<td>  </td>
+				</tr>
+				<tr>
+					<td> max_alarm </td>
+					<td>  </td>
+				</tr>
+				<tr>
+					<td> min_alarm </td>
+					<td>  </td>
+				</tr>
+				<tr>
+					<td> max_warning </td>
+					<td>  </td>
+				</tr>
+				<tr>
+					<td> min_warning </td>
+					<td>  </td>
+				</tr>
+				<tr>
+					<td> delta_time </td>
+					<td>  </td>
+				</tr>
+				<tr>
+					<td> delta_val </td>
+					<td>  </td>
+				</tr>
+			</table>
+		</td>
+		<TD ALIGN="Right" VALIGN=top>
+			<Table Border=2 Cellpadding=3 CELLSPACING=0>
+				<tr bgcolor="#CCCCFF" class="TableHeadingColor">
+				<td colspan=0> <font size=+1> <center><b> Attribute Event Criteria </b></font></center></td>
+				</tr>
+				<tr>
+					<td> Periodic </td>
+					<td> Not set </td>
+				</tr>
+				<tr>
+					<td> Relative Change </td>
+					<td> Not set </td>
+				</tr>
+				<tr>
+					<td> Absolute Change </td>
+					<td> Not set </td>
+				</tr>
+			<Tr BGCOLOR="#CCCCFF"><Td><Hr></Td><Td><Hr></Td></Tr>
+				<tr>
+					<td> Archive Periodic </td>
+					<td> Not set </td>
+				</tr>
+				<tr>
+					<td> Archive Relative Change </td>
+					<td> Not set </td>
+				</tr>
+				<tr>
+					<td> Archive Absolute Change </td>
+					<td> Not set </td>
+				</tr>
+			<Tr BGCOLOR="#CCCCFF"><Td><Hr></Td><Td><Hr></Td></Tr>
+				<tr>
+					<td> Push Change event by user code </td>
+					<td> false </td>
+				</tr>
+			<Tr BGCOLOR="#CCCCFF"><Td> </Td><Td> </Td></Tr>
+				<tr>
+					<td> Push Archive event by user code </td>
+					<td> false </td>
+				</tr>
+			<Tr BGCOLOR="#CCCCFF"><Td> </Td><Td> </Td></Tr>
+				<tr>
+					<td> Push DataReady event by user code </td>
+					<td> false </td>
+				</tr>
+			</table>
+		</td>
+	</TR>
+</table>
+<br><br>
+<hr>
+<a name="attrccdTemperature"> </a>
+<br><br><br>
+<font size="+1"><u><b> Attribute ccdTemperature : </b></u></font>
+<ul>
+	Camera temperature status (°C)
+</ul>
+<br><br><br>
+<Table Border=0 Cellpadding=0 CELLSPACING=20>
+	<TR>
+		<TD ALIGN="left" VALIGN=top>
+			<Table Border=2 Cellpadding=3 CELLSPACING=0>
+				<tr bgcolor="#CCCCFF" class="TableHeadingColor">
+				<td colspan=0> <font size=+1> <center><b> Attribute Definition </b></font></center></td>
+				</tr>
+				<tr>
+					<td> Attribute Type </td>
+					<td> Scalar </td>
+				</tr>
+				<tr>
+					<td> R/W Type </td>
+					<td> READ </td>
+				</tr>
+				<tr>
+					<td> Data Type </td>
+					<td> Tango::DEV_FLOAT </td>
+				</tr>
+				<tr>
+					<td> Display Level </td>
+					<td> OPERATOR </td>
+				</tr>
+				<tr>
+					<td> Inherited </td>
+					<td> false </td>
+				</tr>
+				<tr>
+					<td> Abstract </td>
+					<td> false </td>
+				</tr>
+				<tr>
+					<td> Polling Period </td>
+					<td> Not polled </td>
+				</tr>
+				<tr>
+					<td> Memorized </td>
+					<td> Not set </td>
+				</tr>
+			<Tr BGCOLOR="#CCCCFF"><Td><Hr></Td><Td><Hr></Td></Tr>
+				<tr>
+					<td> Read allowed for </td>
+					<td> All states </td>
+				</tr>
+			</table>
+		</td>
+		<TD ALIGN="Center" VALIGN=top>
+			<Table Border=2 Cellpadding=3 CELLSPACING=0>
+				<tr bgcolor="#CCCCFF" class="TableHeadingColor">
+				<td colspan=0> <font size=+1> <center><b> Attribute Properties </b></font></center></td>
+				</tr>
+				<tr>
+					<td> label </td>
+					<td>  </td>
+				</tr>
+				<tr>
+					<td> unit </td>
+					<td> °C </td>
+				</tr>
+				<tr>
+					<td> standard unit </td>
+					<td>  </td>
+				</tr>
+				<tr>
+					<td> display unit </td>
+					<td>  </td>
+				</tr>
+				<tr>
+					<td> format </td>
+					<td>  </td>
+				</tr>
+				<tr>
+					<td> max_value </td>
+					<td>  </td>
+				</tr>
+				<tr>
+					<td> min_value </td>
+					<td>  </td>
+				</tr>
+				<tr>
+					<td> max_alarm </td>
+					<td>  </td>
+				</tr>
+				<tr>
+					<td> min_alarm </td>
+					<td>  </td>
+				</tr>
+				<tr>
+					<td> max_warning </td>
+					<td>  </td>
+				</tr>
+				<tr>
+					<td> min_warning </td>
+					<td>  </td>
+				</tr>
+				<tr>
+					<td> delta_time </td>
+					<td>  </td>
+				</tr>
+				<tr>
+					<td> delta_val </td>
+					<td>  </td>
+				</tr>
+			</table>
+		</td>
+		<TD ALIGN="Right" VALIGN=top>
+			<Table Border=2 Cellpadding=3 CELLSPACING=0>
+				<tr bgcolor="#CCCCFF" class="TableHeadingColor">
+				<td colspan=0> <font size=+1> <center><b> Attribute Event Criteria </b></font></center></td>
+				</tr>
+				<tr>
+					<td> Periodic </td>
+					<td> Not set </td>
+				</tr>
+				<tr>
+					<td> Relative Change </td>
+					<td> Not set </td>
+				</tr>
+				<tr>
+					<td> Absolute Change </td>
+					<td> Not set </td>
+				</tr>
+			<Tr BGCOLOR="#CCCCFF"><Td><Hr></Td><Td><Hr></Td></Tr>
+				<tr>
+					<td> Archive Periodic </td>
+					<td> Not set </td>
+				</tr>
+				<tr>
+					<td> Archive Relative Change </td>
+					<td> Not set </td>
+				</tr>
+				<tr>
+					<td> Archive Absolute Change </td>
+					<td> Not set </td>
+				</tr>
+			<Tr BGCOLOR="#CCCCFF"><Td><Hr></Td><Td><Hr></Td></Tr>
+				<tr>
+					<td> Push Change event by user code </td>
+					<td> false </td>
+				</tr>
+			<Tr BGCOLOR="#CCCCFF"><Td> </Td><Td> </Td></Tr>
+				<tr>
+					<td> Push Archive event by user code </td>
+					<td> false </td>
+				</tr>
+			<Tr BGCOLOR="#CCCCFF"><Td> </Td><Td> </Td></Tr>
+				<tr>
+					<td> Push DataReady event by user code </td>
+					<td> false </td>
+				</tr>
+			</table>
+		</td>
+	</TR>
+</table>
+<br><br>
+<hr>
+<a name="attrreadoutSpeed"> </a>
+<br><br><br>
+<font size="+1"><u><b> Attribute readoutSpeed : </b></u></font>
+<ul>
+	Readout Speed control is a convenient way to set the DSI Sample Time which is the parameter that controls the readout speed (1MHz, 690KHz)
+</ul>
+<br><br><br>
+<Table Border=0 Cellpadding=0 CELLSPACING=20>
+	<TR>
+		<TD ALIGN="left" VALIGN=top>
+			<Table Border=2 Cellpadding=3 CELLSPACING=0>
+				<tr bgcolor="#CCCCFF" class="TableHeadingColor">
+				<td colspan=0> <font size=+1> <center><b> Attribute Definition </b></font></center></td>
+				</tr>
+				<tr>
+					<td> Attribute Type </td>
+					<td> Scalar </td>
+				</tr>
+				<tr>
+					<td> R/W Type </td>
+					<td> READ_WRITE </td>
+				</tr>
+				<tr>
+					<td> Data Type </td>
+					<td> Tango::DEV_ENUM </td>
+				</tr>
+				<tr>
+					<td> Display Level </td>
+					<td> OPERATOR </td>
+				</tr>
+				<tr>
+					<td> Inherited </td>
+					<td> false </td>
+				</tr>
+				<tr>
+					<td> Abstract </td>
+					<td> false </td>
+				</tr>
+				<tr>
+					<td> Polling Period </td>
+					<td> Not polled </td>
+				</tr>
+				<tr>
+					<td> Memorized </td>
+					<td> Not set </td>
+				</tr>
+			<Tr BGCOLOR="#CCCCFF"><Td><Hr></Td><Td><Hr></Td></Tr>
+				<tr>
+					<td> Read allowed for </td>
+					<td> All states </td>
+				</tr>
+				<tr>
+					<td> Write allowed for </td>
+					<td> All states </td>
 				</tr>
 			</table>
 		</td>
@@ -1226,17 +811,17 @@
 <br><br><br><br>
 <Table Border=2 Cellpadding=3 CELLSPACING=0>
 	<tr bgcolor="#CCCCFF" class="TableHeadingColor">
-	<td colspan=2> <font size=+1> <center><b> SpectrumOneCCD Class States </b></font></center></td>
+	<td colspan=2> <font size=+1> <center><b> SpectralInstrument Class States </b></font></center></td>
 	<tr bgcolor="#CCCCFF" class="TableHeadingColor">
 		<td> <center><b> Name </b></center> </td>
 		<td> <center><b> Description </b></center> </td>
 	</tr>
 	<tr>
-		<td> STANDBY </td>
+		<td> INIT </td>
 		<td>  </td>
 	</tr>
 	<tr>
-		<td> RUNNING </td>
+		<td> STANDBY </td>
 		<td>  </td>
 	</tr>
 	<tr>
@@ -1244,11 +829,7 @@
 		<td>  </td>
 	</tr>
 	<tr>
-		<td> ALARM </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td> DISABLE </td>
+		<td> RUNNING </td>
 		<td>  </td>
 	</tr>
 </table>

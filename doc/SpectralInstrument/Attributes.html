@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <html>
 <head>
-<title> SpectrumOneCCD Tango Class Attributes </title>
+<title> SpectralInstrument Tango Class Attributes </title>
 </head>
 <body text="Black" bgcolor="White" link="Blue" vlink="Purple" alink="Red">
 <br><br><br><br>
 <Table Border=2 Cellpadding=3 CELLSPACING=0>
 	<tr bgcolor="#CCCCFF" class="TableHeadingColor">
-	<td colspan=8> <font size=+1> <center><b> SpectrumOneCCD Class Attributes </b></font></center></td>
+	<td colspan=8> <font size=+1> <center><b> SpectralInstrument Class Attributes </b></font></center></td>
 	<tr bgcolor="#CCCCFF" class="TableHeadingColor">
 		<td> <center><b> Name </b></center> </td>
 		<td> <center><b> Inherited </b></center> </td>
@@ -19,46 +19,34 @@
 		<td> <center><b> Description </b></center> </td>
 	</tr>
 	<tr>
-		<td> <a href="AttrlastTemperature.html"> lastTemperature </a> </td>
-		<td> false </td>
-		<td> false </td>
-		<td> Scalar </td>
-		<td> READ </td>
-		<td> Tango::DEV_DOUBLE </td>
-		<td> OPERATOR </td>
-		<td> Last temperature of the CCD </td>
-	</tr>
-	<tr>
-		<td> <a href="Attrgain.html"> gain </a> </td>
-		<td> false </td>
-		<td> false </td>
-		<td> Scalar </td>
-		<td> READ_WRITE </td>
-		<td> Tango::DEV_LONG </td>
-		<td> OPERATOR </td>
-		<td> Define CCD gain of the camera. </td>
-	</tr>
-	<tr>
-		<td> <a href="AttrnumFlushes.html"> numFlushes </a> </td>
-		<td> false </td>
-		<td> false </td>
-		<td> Scalar </td>
-		<td> READ_WRITE </td>
-		<td> Tango::DEV_LONG </td>
-		<td> OPERATOR </td>
-		<td> Set number of flushes on the camera </td>
-	</tr>
-	<tr>
-		<td> <a href="AttropenShutter.html"> openShutter </a> </td>
+		<td> <a href="Attrcooling.html"> cooling </a> </td>
 		<td> false </td>
 		<td> false </td>
 		<td> Scalar </td>
 		<td> READ_WRITE </td>
 		<td> Tango::DEV_BOOLEAN </td>
 		<td> OPERATOR </td>
-		<td> Open/close camera shutter.<Br>
-			True = Opened<Br>
-			False = Closed </td>
+		<td> Turns the CCD cooling On/Off </td>
+	</tr>
+	<tr>
+		<td> <a href="AttrccdTemperature.html"> ccdTemperature </a> </td>
+		<td> false </td>
+		<td> false </td>
+		<td> Scalar </td>
+		<td> READ </td>
+		<td> Tango::DEV_FLOAT </td>
+		<td> OPERATOR </td>
+		<td> Camera temperature status (°C) </td>
+	</tr>
+	<tr>
+		<td> <a href="AttrreadoutSpeed.html"> readoutSpeed </a> </td>
+		<td> false </td>
+		<td> false </td>
+		<td> Scalar </td>
+		<td> READ_WRITE </td>
+		<td> Tango::DEV_ENUM </td>
+		<td> OPERATOR </td>
+		<td> Readout Speed control is a convenient way to set the DSI Sample Time which is the parameter that controls the readout speed (1MHz, 690KHz) </td>
 	</tr>
 </table>
 <br><br>
