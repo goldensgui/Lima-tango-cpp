@@ -42,8 +42,8 @@
         <XSPRESS3.version>1.0.3</XSPRESS3.version>  
         <UFXC.name>Ufxc</UFXC.name>
         <UFXC.version>2.0.0</UFXC.version>    
-        <SPECTRAL.name>Spectral</SPECTRAL.name>
-        <SPECTRAL.version>1.0.0</SPECTRAL.version>   
+        <SPECTRALINSTRUMENT.name>SpectralInstrument</SPECTRALINSTRUMENT.name>
+        <SPECTRALINSTRUMENT.version>1.0.0</SPECTRALINSTRUMENT.version>   
 
         <YAT.version>1.18.2</YAT.version> 
         <YAT4Tango.version>1.13.1</YAT4Tango.version> 
@@ -101,7 +101,7 @@
        <dependency>
             <groupId>fr.soleil.lib.Lima.Camera</groupId>
             <artifactId>LimaSpectral-amd64-Linux-gcc-shared-${mode}</artifactId>
-            <version>${SPECTRAL.version}</version>
+            <version>${SPECTRALINSTRUMENT.version}</version>
        </dependency>
     </dependencies>
         
@@ -184,8 +184,8 @@
                             <define>XSPRESS3_VERSION=${XSPRESS3.version}</define>
                             <define>UFXC_NAME=${UFXC.name}</define>
                             <define>UFXC_VERSION=${UFXC.version}</define>
-                            <define>SPECTRAL_NAME=${SPECTRAL.name}</define>
-                            <define>SPECTRAL_VERSION=${SPECTRAL.version}</define>
+                            <define>SPECTRALINSTRUMENT_NAME=${SPECTRALINSTRUMENT.name}</define>
+                            <define>SPECTRALINSTRUMENT_VERSION=${SPECTRALINSTRUMENT.version}</define>
 							
                             <!-- define which detector you need to ENABLE -->      
                             <define>SIMULATOR_ENABLED</define>                       
@@ -195,7 +195,7 @@
                             <define>LAMBDA_ENABLED</define>
                             <define>XSPRESS3_ENABLED</define>
                             <define>UFXC_ENABLED</define>
-                            <define>SPECTRAL_ENABLED</define>
+                            <define>SPECTRALINSTRUMENT_ENABLED</define>
 							
                             <define>LAYOUT_ENABLED</define>    
                             <define>MASK_ENABLED</define>
