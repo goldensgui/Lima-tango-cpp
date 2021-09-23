@@ -110,6 +110,26 @@ bool SpectralInstrument::is_readoutSpeed_allowed(TANGO_UNUSED(Tango::AttReqType 
 	return true;
 }
 
+//--------------------------------------------------------
+/**
+ *	Method      : SpectralInstrument::is_acqType_allowed()
+ *	Description : Execution allowed for acqType attribute
+ */
+//--------------------------------------------------------
+bool SpectralInstrument::is_acqType_allowed(TANGO_UNUSED(Tango::AttReqType type))
+{
+	//	Not any excluded states for acqType attribute in Write access.
+	/*----- PROTECTED REGION ID(SpectralInstrument::acqTypeStateAllowed_WRITE) ENABLED START -----*/
+	
+	/*----- PROTECTED REGION END -----*/	//	SpectralInstrument::acqTypeStateAllowed_WRITE
+
+	//	Not any excluded states for acqType attribute in read access.
+	/*----- PROTECTED REGION ID(SpectralInstrument::acqTypeStateAllowed_READ) ENABLED START -----*/
+	
+	/*----- PROTECTED REGION END -----*/	//	SpectralInstrument::acqTypeStateAllowed_READ
+	return true;
+}
+
 
 //=================================================
 //		Commands Allowed Methods

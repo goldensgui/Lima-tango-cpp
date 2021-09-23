@@ -49,7 +49,7 @@ static const char *RcsId = "$Id:  $";
 /*----- PROTECTED REGION END -----*/	//	SpectralInstrument.cpp
 
 /**
- *  Spectral Instrument class description:
+ *  SpectralInstrument class description:
  *    Device for detectors from Spectral Instruments. 
  */
 
@@ -69,6 +69,7 @@ static const char *RcsId = "$Id:  $";
 //  cooling         |  Tango::DevBoolean	Scalar
 //  ccdTemperature  |  Tango::DevFloat	Scalar
 //  readoutSpeed    |  Tango::DevEnum	Scalar
+//  acqType         |  Tango::DevEnum	Scalar
 //================================================================
 
 namespace SpectralInstrument_ns
@@ -83,7 +84,7 @@ namespace SpectralInstrument_ns
 /**
  *	Method      : SpectralInstrument::SpectralInstrument()
  *	Description : Constructors for a Tango device
- *                implementing the classSpectral
+ *                implementing the classSpectralInstrument
  */
 //--------------------------------------------------------
 SpectralInstrument::SpectralInstrument(Tango::DeviceClass *cl, string &s)
@@ -134,6 +135,7 @@ void SpectralInstrument::delete_device()
 	delete[] attr_cooling_read;
 	delete[] attr_ccdTemperature_read;
 	delete[] attr_readoutSpeed_read;
+	delete[] attr_acqType_read;
 }
 
 //--------------------------------------------------------
@@ -198,6 +200,7 @@ void SpectralInstrument::init_device()
 	attr_cooling_read = new Tango::DevBoolean[1];
 	attr_ccdTemperature_read = new Tango::DevFloat[1];
 	attr_readoutSpeed_read = new readoutSpeedEnum[1];
+	attr_acqType_read = new acqTypeEnum[1];
 	/*----- PROTECTED REGION ID(SpectralInstrument::init_device) ENABLED START -----*/
 	
     //	Initialize device
@@ -308,7 +311,7 @@ void SpectralInstrument::get_device_property()
 //--------------------------------------------------------
 void SpectralInstrument::always_executed_hook()
 {
-	//DEBUG_STREAM << "SpectralInstrument::always_executed_hook()  " << device_name << endl;
+	DEBUG_STREAM << "SpectralInstrument::always_executed_hook()  " << device_name << endl;
 	/*----- PROTECTED REGION ID(SpectralInstrument::always_executed_hook) ENABLED START -----*/
 	
 	//	code always executed before all requests
@@ -444,7 +447,7 @@ void SpectralInstrument::write_cooling(Tango::WAttribute &attr)
 //--------------------------------------------------------
 /**
  *	Read attribute ccdTemperature related method
- *	Description: Camera temperature status (C)
+ *	Description: Camera temperature status (??C)
  *
  *	Data type:	Tango::DevFloat
  *	Attr type:	Scalar
@@ -474,7 +477,7 @@ void SpectralInstrument::read_ccdTemperature(Tango::Attribute &attr)
 //--------------------------------------------------------
 /**
  *	Read attribute readoutSpeed related method
- *	Description: 
+ *	Description: Readout Speed control is a convenient way to set the DSI Sample Time which is the parameter that controls the readout speed (1MHz, 690KHz)
  *
  *	Data type:	Tango::DevEnum (readoutSpeedEnum)
  *	Attr type:	Scalar
@@ -517,7 +520,7 @@ void SpectralInstrument::read_readoutSpeed(Tango::Attribute &attr)
 //--------------------------------------------------------
 /**
  *	Write attribute readoutSpeed related method
- *	Description: 
+ *	Description: Readout Speed control is a convenient way to set the DSI Sample Time which is the parameter that controls the readout speed (1MHz, 690KHz)
  *
  *	Data type:	Tango::DevEnum (readoutSpeedEnum)
  *	Attr type:	Scalar
@@ -553,6 +556,106 @@ void SpectralInstrument::write_readoutSpeed(Tango::WAttribute &attr)
     }
 	
 	/*----- PROTECTED REGION END -----*/	//	SpectralInstrument::write_readoutSpeed
+}
+//--------------------------------------------------------
+/**
+ *	Read attribute acqType related method
+ *	Description: 
+ *
+ *	Data type:	Tango::DevEnum (acqTypeEnum)
+ *	Attr type:	Scalar
+ */
+//--------------------------------------------------------
+void SpectralInstrument::read_acqType(Tango::Attribute &attr)
+{
+	DEBUG_STREAM << "SpectralInstrument::read_acqType(Tango::Attribute &attr) entering... " << endl;
+	/*----- PROTECTED REGION ID(SpectralInstrument::read_acqType) ENABLED START -----*/
+	//	Set the attribute value
+
+	try
+	{
+		ushort acqType = 0;
+		m_camera->getAcquisitionType(acqType);
+		Tango::DevShort *sh;
+
+		switch (acqType)
+		{
+		case acqTypeValues::Light:
+			sh = (Tango::DevShort *)acqTypeEnum::_LIGHT;
+			break;
+
+		case acqTypeValues::Dark:
+			sh = (Tango::DevShort *)acqTypeEnum::_DARK;
+			break;
+
+		case acqTypeValues::Triggered:
+			sh = (Tango::DevShort *)acqTypeEnum::_TRIGGERED;
+			break;
+
+		default:
+			break;
+		}
+		attr.set_value((Tango::DevShort *)&sh);
+	}
+	catch (Tango::DevFailed &df)
+	{
+		manage_devfailed_exception(df, "SpectralInstrument::read_acqType");
+	}
+	catch (Exception &e)
+	{
+		manage_lima_exception(e, "SpectralInstrument::read_acqType");
+	}
+
+	/*----- PROTECTED REGION END -----*/	//	SpectralInstrument::read_acqType
+}
+//--------------------------------------------------------
+/**
+ *	Write attribute acqType related method
+ *	Description: 
+ *
+ *	Data type:	Tango::DevEnum (acqTypeEnum)
+ *	Attr type:	Scalar
+ */
+//--------------------------------------------------------
+void SpectralInstrument::write_acqType(Tango::WAttribute &attr)
+{
+	DEBUG_STREAM << "SpectralInstrument::write_acqType(Tango::WAttribute &attr) entering... " << endl;
+	//	Retrieve write value
+	/*----- PROTECTED REGION ID(SpectralInstrument::write_acqType) ENABLED START -----*/
+	try
+	{
+		ushort acqtype = 0;
+		int trigMode = 0;
+		attr.get_write_value(attr_acq_type_write);
+		switch (attr_acq_type_write)
+		{
+		case acqTypeEnum::_LIGHT:
+			acqtype = acqTypeValues::Light;
+			break;
+
+		case acqTypeEnum::_DARK:
+			acqtype = acqTypeValues::Dark;
+			break;
+
+		case acqTypeEnum::_TRIGGERED:
+			acqtype = acqTypeValues::Triggered;
+			break;
+
+		default:
+			break;
+		}
+		m_camera->setAcquisitionType(acqtype);
+	}
+	catch (Tango::DevFailed &df)
+	{
+		manage_devfailed_exception(df, "SpectralInstrument::write_acqType");
+	}
+	catch (Exception &e)
+	{
+		manage_lima_exception(e, "SpectralInstrument::write_acqType");
+	}
+
+	/*----- PROTECTED REGION END -----*/	//	SpectralInstrument::write_acqType
 }
 
 //--------------------------------------------------------

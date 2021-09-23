@@ -304,14 +304,14 @@ void SpectralInstrumentClass::write_class_property()
 
 	//	Put title
 	Tango::DbDatum	title("ProjectTitle");
-	string	str_title("SpectralInstrument detector TANGO specific device.");
+	string	str_title("Spectral Instrument detector TANGO specific device.");
 	title << str_title;
 	data.push_back(title);
 
 	//	Put Description
 	Tango::DbDatum	description("Description");
 	vector<string>	str_desc;
-	str_desc.push_back("Device for detectors from SpectralInstrument Instruments. ");
+	str_desc.push_back("Device for detectors from Spectral Instruments. ");
 	description << str_desc;
 	data.push_back(description);
 
@@ -514,9 +514,9 @@ void SpectralInstrumentClass::attribute_factory(vector<Tango::Attr *> &att_list)
 	//	Attribute : ccdTemperature
 	ccdTemperatureAttrib	*ccdtemperature = new ccdTemperatureAttrib();
 	Tango::UserDefaultAttrProp	ccdtemperature_prop;
-	ccdtemperature_prop.set_description("Camera temperature status (C)");
+	ccdtemperature_prop.set_description("Camera temperature status (??C)");
 	//	label	not set for ccdTemperature
-	ccdtemperature_prop.set_unit("C");
+	ccdtemperature_prop.set_unit("??C");
 	//	standard_unit	not set for ccdTemperature
 	//	display_unit	not set for ccdTemperature
 	//	format	not set for ccdTemperature
@@ -538,7 +538,7 @@ void SpectralInstrumentClass::attribute_factory(vector<Tango::Attr *> &att_list)
 	//	Attribute : readoutSpeed
 	readoutSpeedAttrib	*readoutspeed = new readoutSpeedAttrib();
 	Tango::UserDefaultAttrProp	readoutspeed_prop;
-	//	description	not set for readoutSpeed
+	readoutspeed_prop.set_description("Readout Speed control is a convenient way to set the DSI Sample Time which is the parameter that controls the readout speed (1MHz, 690KHz)");
 	//	label	not set for readoutSpeed
 	//	unit	not set for readoutSpeed
 	//	standard_unit	not set for readoutSpeed
@@ -564,6 +564,38 @@ void SpectralInstrumentClass::attribute_factory(vector<Tango::Attr *> &att_list)
 	readoutspeed->set_disp_level(Tango::OPERATOR);
 	//	Not Memorized
 	att_list.push_back(readoutspeed);
+
+	//	Attribute : acqType
+	acqTypeAttrib	*acqtype = new acqTypeAttrib();
+	Tango::UserDefaultAttrProp	acqtype_prop;
+	//	description	not set for acqType
+	//	label	not set for acqType
+	//	unit	not set for acqType
+	//	standard_unit	not set for acqType
+	//	display_unit	not set for acqType
+	//	format	not set for acqType
+	//	max_value	not set for acqType
+	//	min_value	not set for acqType
+	//	max_alarm	not set for acqType
+	//	min_alarm	not set for acqType
+	//	max_warning	not set for acqType
+	//	min_warning	not set for acqType
+	//	delta_t	not set for acqType
+	//	delta_val	not set for acqType
+	
+	{
+		vector<string> labels;
+		labels.push_back("Light");
+		labels.push_back("Dark");
+		labels.push_back("Triggered");
+		acqtype_prop.set_enum_labels(labels);
+	}
+	acqtype->set_default_properties(acqtype_prop);
+	//	Not Polled
+	acqtype->set_disp_level(Tango::OPERATOR);
+	acqtype->set_memorized();
+	acqtype->set_memorized_init(true);
+	att_list.push_back(acqtype);
 
 
 	//	Create a list of static attributes

@@ -104,6 +104,23 @@ public:
 	virtual string get_enum_type() {return string("readoutSpeedEnum");}
 };
 
+//	Attribute acqType class definition
+class acqTypeAttrib: public Tango::Attr
+{
+public:
+	acqTypeAttrib():Attr("acqType",
+			Tango::DEV_ENUM, Tango::READ_WRITE) {};
+	~acqTypeAttrib() {};
+	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
+		{(static_cast<SpectralInstrument *>(dev))->read_acqType(att);}
+	virtual void write(Tango::DeviceImpl *dev,Tango::WAttribute &att)
+		{(static_cast<SpectralInstrument *>(dev))->write_acqType(att);}
+	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
+		{return (static_cast<SpectralInstrument *>(dev))->is_acqType_allowed(ty);}
+	virtual bool same_type(const type_info &in_type) {return typeid(acqTypeEnum) == in_type;}
+	virtual string get_enum_type() {return string("acqTypeEnum");}
+};
+
 
 /**
  *	The SpectralInstrumentClass singleton definition

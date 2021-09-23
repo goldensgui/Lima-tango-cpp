@@ -59,7 +59,7 @@ using namespace yat4tango;
 /*----- PROTECTED REGION END -----*/	//	SpectralInstrument.h
 
 /**
- *  Spectral Instrument class description:
+ *  SpectralInstrument class description:
  *    Device for detectors from Spectral Instruments. 
  */
 
@@ -71,11 +71,18 @@ enum _readoutSpeedEnum {
 } ;
 typedef _readoutSpeedEnum readoutSpeedEnum;
 
+enum _acqTypeEnum {
+	_LIGHT,
+	_DARK,
+	_TRIGGERED,
+} ;
+typedef _acqTypeEnum acqTypeEnum;
+
 /*----- PROTECTED REGION ID(SpectralInstrument::Additional Class Declarations) ENABLED START -----*/
 
 //	Additional Class Declarations
 
-/*----- PROTECTED REGION END -----*/	//	Spectral::Additional Class Declarations
+/*----- PROTECTED REGION END -----*/	//	SpectralInstrument::Additional Class Declarations
 
 class SpectralInstrument : public TANGO_BASE_CLASS
 {
@@ -85,11 +92,19 @@ class SpectralInstrument : public TANGO_BASE_CLASS
 public:
 	Tango::DevBoolean	attr_cooling_write;
 	Tango::DevShort     attr_readout_speed_write;
+	Tango::DevShort     attr_acq_type_write;
 
 	enum readoutSpeedValues : ushort
 	{
 		value_1MHZ = 18,
 		value_690KHZ = 40,
+	};
+
+	enum acqTypeValues : ushort
+	{
+		Light,
+		Dark,
+		Triggered
 	};
 
 /*----- PROTECTED REGION END -----*/	//	SpectralInstrument::Data Members
@@ -114,6 +129,7 @@ public:
 	Tango::DevBoolean	*attr_cooling_read;
 	Tango::DevFloat	*attr_ccdTemperature_read;
 	readoutSpeedEnum	*attr_readoutSpeed_read;
+	acqTypeEnum	*attr_acqType_read;
 
 //	Constructors and destructors
 public:
@@ -194,7 +210,7 @@ public:
 	virtual bool is_cooling_allowed(Tango::AttReqType type);
 /**
  *	Attribute ccdTemperature related methods
- *	Description: Camera temperature status (C)
+ *	Description: Camera temperature status (??C)
  *
  *	Data type:	Tango::DevFloat
  *	Attr type:	Scalar
@@ -203,7 +219,7 @@ public:
 	virtual bool is_ccdTemperature_allowed(Tango::AttReqType type);
 /**
  *	Attribute readoutSpeed related methods
- *	Description: 
+ *	Description: Readout Speed control is a convenient way to set the DSI Sample Time which is the parameter that controls the readout speed (1MHz, 690KHz)
  *
  *	Data type:	Tango::DevEnum
  *	Attr type:	Scalar
@@ -211,6 +227,16 @@ public:
 	virtual void read_readoutSpeed(Tango::Attribute &attr);
 	virtual void write_readoutSpeed(Tango::WAttribute &attr);
 	virtual bool is_readoutSpeed_allowed(Tango::AttReqType type);
+/**
+ *	Attribute acqType related methods
+ *	Description: 
+ *
+ *	Data type:	Tango::DevEnum
+ *	Attr type:	Scalar
+ */
+	virtual void read_acqType(Tango::Attribute &attr);
+	virtual void write_acqType(Tango::WAttribute &attr);
+	virtual bool is_acqType_allowed(Tango::AttReqType type);
 
 
 	//--------------------------------------------------------
